@@ -1,0 +1,131 @@
+Welcome to ed379
+>l A3-sample.txt
+A3-sample.txt (10)
+>1
+>p 100
+  1: It was the best of times,
+  2: it was the worst of times,
+  3: it was the age of wisdom,
+  4: it was the age of foolishness,
+  5: it was the epoch of belief,
+  6: it was the epoch of incredulity,
+  7: it was the season of light,
+  8: it was the season of darkness,
+  9: it was the spring of hope,
+ 10: it was the winter of despair.
+>5
+>
+  6: it was the epoch of incredulity,
+>
+  7: it was the season of light,
+>
+  8: it was the season of darkness,
+>p -4
+  4: it was the age of foolishness,
+  5: it was the epoch of belief,
+  6: it was the epoch of incredulity,
+  7: it was the season of light,
+  8: it was the season of darkness,
+>a
+[In Edmonton, the season is six months
+long, but in Hawaii it is much less!]
+
+>p -5
+  5: it was the epoch of belief,
+  6: it was the epoch of incredulity,
+  7: it was the season of light,
+  8: it was the season of darkness,
+  9: [In Edmonton, the season is six months
+ 10: long, but in Hawaii it is much less!]
+>8
+>i
+[In Edmonton, May, June, July, and August
+are our season of light. Sadly, it is not
+long enough!]
+
+>1
+>p 100
+  1: It was the best of times,
+  2: it was the worst of times,
+  3: it was the age of wisdom,
+  4: it was the age of foolishness,
+  5: it was the epoch of belief,
+  6: it was the epoch of incredulity,
+  7: it was the season of light,
+  8: [In Edmonton, May, June, July, and August
+  9: are our season of light. Sadly, it is not
+ 10: long enough!]
+ 11: it was the season of darkness,
+ 12: [In Edmonton, the season is six months
+ 13: long, but in Hawaii it is much less!]
+ 14: it was the spring of hope,
+ 15: it was the winter of despair.
+>8
+>d 2
+>p
+  8: it was the season of darkness,
+>
+  9: [In Edmonton, the season is six months
+>d 1
+>p
+  9: it was the spring of hope,
+>1
+>p 100
+  1: It was the best of times,
+  2: it was the worst of times,
+  3: it was the age of wisdom,
+  4: it was the age of foolishness,
+  5: it was the epoch of belief,
+  6: it was the epoch of incredulity,
+  7: it was the season of light,
+  8: it was the season of darkness,
+  9: it was the spring of hope,
+ 10: it was the winter of despair.
+>? belief
+  5: it was the epoch of belief,
+>? "best of times"
+  1: It was the best of times,
+>? worst
+  2: it was the worst of times,
+>/ hope
+  9: it was the spring of hope,
+>/ was
+ 10: it was the winter of despair.
+>/ was
+  1: It was the best of times,
+>r best BEST
+  1: It was the BEST of times,
+>r "of times" "OF EVERYTHING!"
+  1: It was the BEST OF EVERYTHING!,
+>i
+With apologies to Charles Dickens...
+
+>p 100
+  1: With apologies to Charles Dickens...
+  2: It was the BEST OF EVERYTHING!,
+  3: it was the worst of times,
+  4: it was the age of wisdom,
+  5: it was the age of foolishness,
+  6: it was the epoch of belief,
+  7: it was the epoch of incredulity,
+  8: it was the season of light,
+  9: it was the season of darkness,
+ 10: it was the spring of hope,
+ 11: it was the winter of despair.
+>s
+>p -100
+  1: It was the BEST OF EVERYTHING!,
+  2: With apologies to Charles Dickens...
+  3: it was the age of foolishness,
+  4: it was the age of wisdom,
+  5: it was the epoch of belief,
+  6: it was the epoch of incredulity,
+  7: it was the season of darkness,
+  8: it was the season of light,
+  9: it was the spring of hope,
+ 10: it was the winter of despair.
+ 11: it was the worst of times,
+>w A3-newfile.txt
+A3-newfile.txt (11)
+>q
+Good-bye

@@ -1,0 +1,45 @@
+l A3-sample.txt
+1
+p 100
+5
+
+
+
+p -4
+a
+[In Edmonton, the season is six months
+long, but in Hawaii it is much less!]
+
+p -5
+8
+i
+[In Edmonton, May, June, July, and August
+are our season of light. Sadly, it is not
+long enough!]
+
+1
+p 100
+8
+d 2
+p
+
+d 1
+p
+1
+p 100
+? belief
+? "best of times"
+? worst
+/ hope
+/ was
+/ was
+r best BEST
+r "of times" "OF EVERYTHING!"
+i
+With apologies to Charles Dickens...
+
+p 100
+s
+p -100
+w A3-newfile.txt
+q
