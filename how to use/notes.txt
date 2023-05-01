@@ -1,10 +1,10 @@
 ###A few semantic notes: 
-> ##Starting it Up: 
+> Starting it Up: 
 The program does not need to read in a file as its first command.
 The program starts up with an empty textfile(titled “new.txt”),
 which the user could start adding to and save under a different name. 
 
-> ##User Responsibility: 
+> User Responsibility: 
  When reading in a file, the previous file is “thrown away”. The program does not check to see if the previous file was changed. It is the user’s responsibility to  write the file out before reading in a new one. 
  The above comment also applies for the quit command. It is the user’s responsibility to write the  file out before quitting the program. 
   
