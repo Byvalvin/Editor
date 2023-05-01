@@ -1,4 +1,5 @@
 ###A few semantic notes: 
+
 > Starting it Up: 
 The program does not need to read in a file as its first command.
 The program starts up with an empty textfile(titled “new.txt”),
