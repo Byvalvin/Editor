@@ -1,13 +1,16 @@
 A few semantic notes: 
 
-> Starting it Up: 
-The program does not need to read in a file as its first command.
-The program starts up with an empty textfile(titled “new.txt”),
-which the user could start adding to and save under a different name. 
+Starting Up: 
+ The program does not need to read in a file as its first command.
+ The program starts up with an empty textfile(titled “new.txt”),
+ which the user could start adding to and save under a different name. 
 
 User Responsibility: 
- When reading in a file, the previous file is “thrown away”. The program does not check to see if the previous file was changed. It is the user’s responsibility to  write the file out before reading in a new one. 
+ When reading in a file, the previous file is “thrown away”. The program does not check to see if the previous file was changed.
+ It is the user’s responsibility to  write the file out before reading in a new one. 
  The above comment also applies for the quit command. It is the user’s responsibility to write the  file out before quitting the program. 
   
 Error Handling: 
-The original ed program was sparse on error reporting (as is this program). However, some error handling occurs in this program; messages for all command formatting errors and I/O errors, meaningful semantic  errors (if executed would cause a problem (e.g., asking to go to a line number beyond the end of file)). Some commands can have minor errors – errors that have no impact (e.g., asking  to print 100 lines of a file, but there are only 10 lines in the file; a search does not find a matching  line; a replace does not do a text replacement). These messages can be ignored. 
+ The original ed program was sparse on error reporting (as is this program).
+ However, some error handling occurs in this program; messages for all command formatting errors and I/O errors, meaningful semantic  errors (if executed would cause a     problem (e.g., asking to go to a line number beyond the end of file)).
+ Some commands can have minor errors – errors that have no impact (e.g., asking  to print 100 lines of a file, but there are only 10 lines in the file; a search does not   find a matching  line; a replace does not do a text replacement). These messages can be ignored. 
