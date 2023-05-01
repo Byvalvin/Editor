@@ -29,7 +29,7 @@ def main():
         whitespaces = [" ","    "]
         
         print(start_message)
-        while edit:
+        while edit: #process commands from the user until they quit or save
                 commands = [None,None,None] # new commands each run
                 
                 user_input = input()
