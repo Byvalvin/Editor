@@ -1,0 +1,16 @@
+TextFile is implemented using a doubly linked list (base code from University of Alberta’s CMPUT175). Each linked list entry contains one line of text from the file that is being edited. 
+The new node is added relative to current, with where indicating whether it is inserted before or  after. 
+
+TextFile Class methods;
+• __init__(self,name) – create a TextFile, recording the name of the file read. • load(self,name) – read in text. 
+• write(self,name) – write out file’s text. 
+• print(self,offset) – print line(s), with offset indicating the number of lines before  or after the current line to be printed. 
+• linenum(self,lineno) – set the current line to be the one at line #. • add(self,where) – where is “insert” (before) or “add” (after) the current line. • delete(self,offset) – delete line(s), with offset indicating the number of lines
+ before or after the current line to be deleted. 
+• search(self,text,where) – where is to look “before” or “after” the current line. • replace(self,text1,text2) – in the current line, replace “text1” with “text2”, if possible. • sort(self) – sort the entire file. 
+• getName(self) – get the name of the file. 
+• setName(self,name) – set the name of the file. 
+• getCurr(self) – get the current line. 
+• setCurr(self,current) – set the current line. 
+• getLine(self) – get the line # of the current line. 
+• setLine(self,line) – set the line # of the current line. 
