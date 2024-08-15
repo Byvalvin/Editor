@@ -1,12 +1,13 @@
 // JavaScript Text Editor Application
-console.log("loaded ed");
 
 let currentLine = 0;
 let fileSaved = false;
 let textLines = [];
 const textArea = document.getElementById('textArea');
 const commandInput = document.getElementById('commandInput');
+const fileInput = document.getElementById('fileInput');
 
+// Function to process user commands
 function processCommand() {
     const command = commandInput.value.trim();
     commandInput.value = ''; // Clear input field
@@ -14,7 +15,7 @@ function processCommand() {
     if (!command) return; // Ignore empty commands
 
     const [cmd, ...params] = command.split(/\s+/);
-    
+
     try {
         switch (cmd) {
             case 'p':
@@ -30,7 +31,8 @@ function processCommand() {
                 insertLine(params[0]);
                 break;
             case 'l':
-                loadFile(params[0]);
+                // Load file from the file input
+                loadFile();
                 break;
             case 'r':
                 replaceText(params[0], params[1]);
@@ -52,11 +54,13 @@ function processCommand() {
     }
 }
 
+// Function to set the command in the input field
 function setCommand(command) {
     commandInput.value = command;
     commandInput.focus();
 }
 
+// Function to print lines based on the offset
 function printLines(offset) {
     if (offset) {
         offset = parseInt(offset, 10);
@@ -67,52 +71,69 @@ function printLines(offset) {
     }
 }
 
+// Function to add a new line
 function addLine(text) {
     textLines.splice(currentLine + 1, 0, text);
     updateTextArea();
 }
 
+// Function to delete a line
 function deleteLine(offset) {
     offset = parseInt(offset, 10);
     textLines.splice(currentLine + offset, 1);
     updateTextArea();
 }
 
+// Function to insert a new line
 function insertLine(text) {
     textLines.splice(currentLine, 0, text);
     updateTextArea();
 }
 
-function loadFile(filename) {
-    // Placeholder for loading file logic
-    alert('Loading files is not implemented yet.');
+// Function to handle file input
+function loadFile() {
+    const file = fileInput.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const fileContent = event.target.result;
+            textLines = fileContent.split('\n');
+            updateTextArea();
+        };
+        reader.readAsText(file);
+    } else {
+        alert('No file selected.');
+    }
 }
 
+// Function to replace text in lines
 function replaceText(find, replace) {
     textLines = textLines.map(line => line.replace(find, replace));
     updateTextArea();
 }
 
+// Function to sort lines
 function sortLines() {
     textLines.sort();
     updateTextArea();
 }
 
+// Function to save the file (not implemented)
 function saveFile(filename) {
-    // Placeholder for saving file logic
     alert('Saving files is not implemented yet.');
     fileSaved = true;
 }
 
+// Function to quit the application
 function quit() {
     if (!fileSaved) {
         const confirmSave = confirm("Current text not saved. File will be discarded. Do you wish to continue?");
         if (!confirmSave) return;
     }
-    // Logic to quit the application
     alert('Quitting application.');
 }
 
+// Function to update the text area
 function updateTextArea() {
     textArea.textContent = textLines.join('\n');
 }
