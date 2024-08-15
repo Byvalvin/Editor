@@ -33,7 +33,8 @@ function showInput(command) {
             break;
 
         case 'd': // Delete Line
-            inputSection.innerHTML += '<input type="text" id="line-number" placeholder="Enter line number to delete">';
+            inputSection.innerHTML += '<input type="text" id="start-line-number" placeholder="Enter start line number">';
+            inputSection.innerHTML += '<input type="text" id="end-line-number" placeholder="Enter end line number">';
             break;
 
         case 'l': // Load File
@@ -81,7 +82,9 @@ function executeCommand(cmd) {
             break;
 
         case 'd': // Delete line
-            parameters = document.getElementById('line-number')?.value;
+            const startLine = parseInt(document.getElementById('start-line-number')?.value, 10);
+            const endLine = parseInt(document.getElementById('end-line-number')?.value, 10);
+            parameters = `${startLine} ${endLine}`;
             break;
 
         case 'l': // Load file
@@ -117,6 +120,7 @@ function executeCommand(cmd) {
     }
 
     handleCommand(cmd, parameters);
+    clearInputs(); // Clear input fields after processing command
 }
 
 function handleCommand(cmd, parameters) {
@@ -128,15 +132,16 @@ function handleCommand(cmd, parameters) {
             textFile.content += args.join(' ') + '\n';
             break;
 
-        case 'd': // Delete line
-            const deleteIndex = parseInt(args[0], 10);
-            if (!isNaN(deleteIndex)) {
-                textFile.content = textFile.content.split('\n').filter((_, i) => i !== deleteIndex).join('\n');
+        case 'd': // Delete lines
+            const startLine = parseInt(args[0], 10) - 1;
+            const endLine = parseInt(args[1], 10) - 1;
+            if (!isNaN(startLine) && !isNaN(endLine)) {
+                textFile.content = textFile.content.split('\n').filter((_, i) => i < startLine || i > endLine).join('\n');
             }
             break;
 
         case 'i': // Insert text
-            const insertIndex = parseInt(args[0], 10);
+            const insertIndex = parseInt(args[0], 10) - 1;
             if (!isNaN(insertIndex)) {
                 const lines = textFile.content.split('\n');
                 lines.splice(insertIndex, 0, args.slice(1).join(' '));
@@ -144,12 +149,12 @@ function handleCommand(cmd, parameters) {
             }
             break;
 
-        case 'p': // Print lines
-            const printIndex = parseInt(args[0], 10);
+        case 'p': // Print line
+            const printIndex = parseInt(args[0], 10) - 1;
             if (!isNaN(printIndex)) {
                 const lines = textFile.content.split('\n');
                 if (printIndex < lines.length) {
-                    outputElement.innerHTML += `Line ${printIndex}: ${lines[printIndex]}<br>`;
+                    outputElement.innerHTML += `Line ${printIndex + 1}: ${lines[printIndex]}<br>`;
                 }
             }
             break;
@@ -210,6 +215,11 @@ function handleCommand(cmd, parameters) {
     outputElement.innerHTML += `Content:<br>${textFile.content.replace(/\n/g, '<br>')}<br>`;
 }
 
+function clearInputs() {
+    document.querySelectorAll('#input-section input').forEach(input => input.value = '');
+}
+
 function quit() {
     alert("Good-bye");
 }
+
