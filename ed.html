@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Editor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #inputArea {
+            margin: 20px;
+        }
+        #textArea {
+            border: 1px solid #ccc;
+            height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            white-space: pre-wrap; /* Preserve whitespace formatting */
+        }
+    </style>
+</head>
+<body>
+    <h1>Text Editor</h1>
+    <div id="inputArea">
+        <input type="text" id="commandInput" placeholder="Enter command" autofocus />
+        <button onclick="processCommand()">Submit</button>
+    </div>
+    <div id="textArea" contenteditable="true"></div>
+    <script src="script.js"></script>
+</body>
+</html>
