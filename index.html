@@ -18,15 +18,25 @@
         <button onclick="setCommand('w')">Save File</button>
         <button onclick="setCommand('q')">Quit</button>
     </div>
+
     <div id="content">
         <div id="inputArea">
+            <label for="commandInput">Command:</label>
             <input type="text" id="commandInput" placeholder="Enter command" autofocus />
             <button onclick="processCommand()">Submit</button>
+
+            <!-- File input for loading and saving files -->
+            <label for="fileInput">File:</label>
             <input type="file" id="fileInput" />
-            <div id="additionalInputs"></div> <!-- Container for additional inputs -->
+
+            <!-- Container for additional inputs dynamically added based on commands -->
+            <div id="additionalInputs"></div>
         </div>
+
+        <!-- Text area where the content is displayed and edited -->
         <div id="textArea" contenteditable="true"></div>
     </div>
+
     <script src="scripts/ed.js"></script>
 </body>
 </html>
