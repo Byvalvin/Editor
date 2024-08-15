@@ -145,17 +145,21 @@ function handleCommand(cmd, parameters) {
             const startLineDel = args.length > 0 ? parseInt(args[0], 10) - 1 : null;
             const endLineDel = args.length > 1 ? parseInt(args[1], 10) - 1 : null;
 
-            if (startLineDel === null && endLineDel === null) {
+            console.log('d', startPrintLine, endPrintLine);
+            const startNaN = isNaN(startPrintLine);
+            const lastNaN = isNaN(lastPrintLine);
+
+            if (startLineDel === null||startNaN && endLineDel === null||lastNaN) {
                 // Delete all lines
                 textFile.content = '';
-            } else if (startLineDel !== null && endLineDel === null) {
+            } else if (startLineDel !== null||startNaN && endLineDel === null||lastNaN) {
                 // Delete specific line
                 if (startLineDel >= 0 && startLineDel < textFile.content.split('\n').length) {
                     textFile.content = textFile.content.split('\n').filter((_, i) => i !== startLineDel).join('\n');
                 } else {
                     alert("Line number out of bounds");
                 }
-            } else if (startLineDel !== null && endLineDel !== null) {
+            } else if (startLineDel !== null||startNaN && endLineDel !== null||lastNaN) {
                 // Delete range of lines
                 if (startLineDel >= 0 && endLineDel >= startLineDel && endLineDel < textFile.content.split('\n').length) {
                     textFile.content = textFile.content.split('\n').filter((_, i) => i < startLineDel || i > endLineDel).join('\n');
@@ -180,8 +184,8 @@ function handleCommand(cmd, parameters) {
             const startPrintLine = args.length > 0 ? parseInt(args[0], 10) - 1 : null;
             const endPrintLine = args.length > 1 ? parseInt(args[1], 10) - 1 : null;
 
-            console.log(startPrintLine, endPrintLine);
-            const startNaN = isNan(startPrintLine);
+            console.log('p', startPrintLine, endPrintLine);
+            const startNaN = isNaN(startPrintLine);
             const lastNaN = isNaN(lastPrintLine);
 
             if (startPrintLine === null||startNaN && endPrintLine === null||lastNaN) {
