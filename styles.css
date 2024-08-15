@@ -91,6 +91,27 @@ h1 {
     background-color: #0056b3;
 }
 
+/* General Input Styles */
+.input-section input {
+    margin: 5px 0;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Styles for text inputs (larger) */
+.text-input {
+    width: 100%;
+    max-width: 600px; /* Adjust as needed */
+}
+
+/* Styles for number inputs (smaller) */
+.number-input {
+    width: 150px; /* Adjust as needed */
+}
+
+
 /* Output Section Styles */
 #output {
     margin-top: 20px;
