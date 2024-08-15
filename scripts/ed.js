@@ -16,33 +16,33 @@ function processCommand() {
 
     if (!command) return; // Ignore empty commands
 
-    const [cmd, ...params] = command.split(/\s+/);
+    const [cmd] = command.split(/\s+/);
 
     try {
         switch (cmd) {
             case 'p':
-                printLines(params[0]);
+                printLines();
                 break;
             case 'a':
-                addLine(params.join(' '));
+                addLine();
                 break;
             case 'd':
-                deleteLine(params[0]);
+                deleteLine();
                 break;
             case 'i':
-                insertLine(params.join(' '));
+                insertLine();
+                break;
+            case 'r':
+                replaceText();
                 break;
             case 'l':
                 loadFile();
-                break;
-            case 'r':
-                replaceText(params[0], params[1]);
                 break;
             case 's':
                 sortLines();
                 break;
             case 'w':
-                saveFile(params[0]);
+                saveFile();
                 break;
             case 'q':
                 quit();
@@ -127,11 +127,12 @@ function loadFile() {
 }
 
 // Function to print lines based on the offset
-function printLines(offset) {
+function printLines() {
+    const offset = document.getElementById('offset')?.value.trim();
     if (offset) {
-        offset = parseInt(offset, 10);
-        if (isNaN(offset) || offset <= 0) throw new Error('Invalid offset.');
-        const linesToShow = textLines.slice(currentLine, currentLine + offset);
+        const numLines = parseInt(offset, 10);
+        if (isNaN(numLines) || numLines <= 0) throw new Error('Invalid offset.');
+        const linesToShow = textLines.slice(currentLine, currentLine + numLines);
         textArea.textContent = linesToShow.join('\n');
     } else {
         textArea.textContent = textLines[currentLine] || '';
@@ -139,29 +140,34 @@ function printLines(offset) {
 }
 
 // Function to add a new line
-function addLine(text) {
-    if (text === undefined || text.trim() === '') throw new Error('No text provided.');
+function addLine() {
+    const text = document.getElementById('text')?.value.trim();
+    if (!text) throw new Error('No text provided.');
     textLines.splice(currentLine + 1, 0, text);
     updateTextArea();
 }
 
 // Function to delete a line
-function deleteLine(offset) {
-    offset = parseInt(offset, 10);
-    if (isNaN(offset) || offset < 1 || currentLine + offset >= textLines.length) throw new Error('Invalid line number.');
-    textLines.splice(currentLine + offset - 1, 1);
+function deleteLine() {
+    const offset = document.getElementById('offset')?.value.trim();
+    const lineOffset = parseInt(offset, 10);
+    if (isNaN(lineOffset) || lineOffset < 1 || currentLine + lineOffset - 1 >= textLines.length) throw new Error('Invalid line number.');
+    textLines.splice(currentLine + lineOffset - 1, 1);
     updateTextArea();
 }
 
 // Function to insert a new line
-function insertLine(text) {
-    if (text === undefined || text.trim() === '') throw new Error('No text provided.');
+function insertLine() {
+    const text = document.getElementById('text')?.value.trim();
+    if (!text) throw new Error('No text provided.');
     textLines.splice(currentLine, 0, text);
     updateTextArea();
 }
 
 // Function to replace text in lines
-function replaceText(find, replace) {
+function replaceText() {
+    const find = document.getElementById('find')?.value.trim();
+    const replace = document.getElementById('replace')?.value.trim();
     if (!find || !replace) throw new Error('Find and replace texts are required.');
     textLines = textLines.map(line => line.replace(new RegExp(find, 'g'), replace));
     updateTextArea();
@@ -174,7 +180,8 @@ function sortLines() {
 }
 
 // Function to save the file
-function saveFile(filename) {
+function saveFile() {
+    const filename = document.getElementById('filename')?.value.trim();
     if (!filename) throw new Error('Filename is required.');
     const blob = new Blob([textLines.join('\n')], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
