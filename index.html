@@ -10,16 +10,16 @@
     <h1>Welcome to ed379</h1>
     <div id="output"></div>
     <div class="button-container">
-        <button onclick="showInput('a')">Add Text</button>
-        <button onclick="showInput('d')">Delete Line</button>
-        <button onclick="showInput('i')">Insert Text</button>
-        <button onclick="showInput('l')">Load File</button>
-        <button onclick="showInput('p')">Print Line</button>
-        <button onclick="showInput('r')">Replace Text</button>
-        <button onclick="showInput('s')">Sort Lines</button>
-        <button onclick="showInput('w')">Save File</button>
-        <button onclick="showInput('/')">Search Forward</button>
-        <button onclick="showInput('?')">Search Backward</button>
+        <button id="btn-a" onclick="selectCommand('a')">Add Text</button>
+        <button id="btn-d" onclick="selectCommand('d')">Delete Line</button>
+        <button id="btn-i" onclick="selectCommand('i')">Insert Text</button>
+        <button id="btn-l" onclick="selectCommand('l')">Load File</button>
+        <button id="btn-p" onclick="selectCommand('p')">Print Line</button>
+        <button id="btn-r" onclick="selectCommand('r')">Replace Text</button>
+        <button id="btn-s" onclick="selectCommand('s')">Sort Lines</button>
+        <button id="btn-w" onclick="selectCommand('w')">Save File</button>
+        <button id="btn-search-fwd" onclick="selectCommand('/')">Search Forward</button>
+        <button id="btn-search-bck" onclick="selectCommand('?')">Search Backward</button>
         <button onclick="quit()">Quit</button>
     </div>
     <div id="input-section" class="input-section"></div>
