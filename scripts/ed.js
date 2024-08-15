@@ -179,6 +179,8 @@ function handleCommand(cmd, parameters) {
             const startPrintLine = args.length > 0 ? parseInt(args[0], 10) - 1 : null;
             const endPrintLine = args.length > 1 ? parseInt(args[1], 10) - 1 : null;
 
+            console.log(startPrintLine, endPrintLine);
+
             if (startPrintLine === null && endPrintLine === null) {
                 // Print all lines
                 textFile.content.split('\n').forEach((line, index) => {
@@ -194,7 +196,7 @@ function handleCommand(cmd, parameters) {
                 }
             } else if (startPrintLine !== null && endPrintLine !== null) {
                 // Print range of lines
-                if (startPrintLine >= 0 && endPrintLine >= startPrintLine && endPrintLine < textFile.content.split('\n').length) {
+                if (  (startPrintLine >= 0 && endPrintLine >= startPrintLine) && endPrintLine < textFile.content.split('\n').length) {
                     const lines = textFile.content.split('\n');
                     for (let i = startPrintLine; i <= endPrintLine; i++) {
                         outputElement.innerHTML += `Line ${i + 1}: ${lines[i]}<br>`;
