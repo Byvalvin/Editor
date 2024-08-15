@@ -7,26 +7,22 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="commandList">
-        <button onclick="setCommand('p')">Print</button>
-        <button onclick="setCommand('a')">Add Line</button>
-        <button onclick="setCommand('d')">Delete Line</button>
-        <button onclick="setCommand('i')">Insert Line</button>
-        <button onclick="setCommand('l')">Load File</button>
-        <button onclick="setCommand('r')">Replace Text</button>
-        <button onclick="setCommand('s')">Sort Lines</button>
-        <button onclick="setCommand('w')">Save File</button>
-        <button onclick="setCommand('q')">Quit</button>
+    <h1>Welcome to ed379</h1>
+    <div id="output"></div>
+    <div class="button-container">
+        <button onclick="showInput('a')">Add Text</button>
+        <button onclick="showInput('d')">Delete Line</button>
+        <button onclick="showInput('i')">Insert Text</button>
+        <button onclick="showInput('l')">Load File</button>
+        <button onclick="showInput('p')">Print Line</button>
+        <button onclick="showInput('r')">Replace Text</button>
+        <button onclick="showInput('s')">Sort Lines</button>
+        <button onclick="showInput('w')">Save File</button>
+        <button onclick="showInput('/')">Search Forward</button>
+        <button onclick="showInput('?')">Search Backward</button>
+        <button onclick="quit()">Quit</button>
     </div>
-    <div id="content">
-        <div id="inputArea">
-            <input type="text" id="commandInput" placeholder="Enter command" autofocus />
-            <button onclick="processCommand()">Submit</button>
-            <input type="file" id="fileInput" />
-            <div id="additionalInputs"></div> <!-- Container for additional inputs -->
-        </div>
-        <div id="textArea" contenteditable="true"></div>
-    </div>
-    <script src="scripts/ed.js"></script>
+    <div id="input-section" class="input-section"></div>
+    <script src="editor.js"></script>
 </body>
 </html>
