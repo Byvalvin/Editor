@@ -41,8 +41,9 @@ function showInput(command) {
             inputSection.innerHTML += '<input type="file" id="file-input" accept=".txt">';
             break;
 
-        case 'p': // Print Line
-            inputSection.innerHTML += '<input type="text" id="print-line-number" placeholder="Enter line number to print">';
+        case 'p': // Print Line/Range
+            inputSection.innerHTML += '<input type="text" id="print-start-line-number" placeholder="Enter start line number">';
+            inputSection.innerHTML += '<input type="text" id="print-end-line-number" placeholder="Enter end line number (optional)">';
             break;
 
         case 'r': // Replace Text
@@ -81,10 +82,10 @@ function executeCommand(cmd) {
             parameters = document.getElementById('text-input')?.value;
             break;
 
-        case 'd': // Delete line
-            const startLine = parseInt(document.getElementById('start-line-number')?.value, 10);
-            const endLine = parseInt(document.getElementById('end-line-number')?.value, 10);
-            parameters = `${startLine} ${endLine}`;
+        case 'd': // Delete lines
+            const startLineDel = parseInt(document.getElementById('start-line-number')?.value, 10);
+            const endLineDel = parseInt(document.getElementById('end-line-number')?.value, 10);
+            parameters = `${startLineDel} ${endLineDel}`;
             break;
 
         case 'l': // Load file
@@ -100,8 +101,10 @@ function executeCommand(cmd) {
             }
             return;
 
-        case 'p': // Print lines
-            parameters = document.getElementById('print-line-number')?.value;
+        case 'p': // Print line or range
+            const startPrintLine = parseInt(document.getElementById('print-start-line-number')?.value, 10);
+            const endPrintLine = parseInt(document.getElementById('print-end-line-number')?.value, 10);
+            parameters = `${startPrintLine} ${endPrintLine}`;
             break;
 
         case 'r': // Replace text
@@ -133,10 +136,10 @@ function handleCommand(cmd, parameters) {
             break;
 
         case 'd': // Delete lines
-            const startLine = parseInt(args[0], 10) - 1;
-            const endLine = parseInt(args[1], 10) - 1;
-            if (!isNaN(startLine) && !isNaN(endLine)) {
-                textFile.content = textFile.content.split('\n').filter((_, i) => i < startLine || i > endLine).join('\n');
+            const startLineDel = parseInt(args[0], 10) - 1;
+            const endLineDel = parseInt(args[1], 10) - 1;
+            if (!isNaN(startLineDel) && !isNaN(endLineDel)) {
+                textFile.content = textFile.content.split('\n').filter((_, i) => i < startLineDel || i > endLineDel).join('\n');
             }
             break;
 
@@ -149,14 +152,8 @@ function handleCommand(cmd, parameters) {
             }
             break;
 
-        case 'p': // Print line
-            const printIndex = parseInt(args[0], 10) - 1;
-            if (!isNaN(printIndex)) {
-                const lines = textFile.content.split('\n');
-                if (printIndex < lines.length) {
-                    outputElement.innerHTML += `Line ${printIndex + 1}: ${lines[printIndex]}<br>`;
-                }
-            }
+        case 'p': // Print line or range
+            printLines(args);
             break;
 
         case 'r': // Replace text
@@ -213,6 +210,21 @@ function handleCommand(cmd, parameters) {
     }
 
     outputElement.innerHTML += `Content:<br>${textFile.content.replace(/\n/g, '<br>')}<br>`;
+}
+
+function printLines(args) {
+    const outputElement = document.getElementById('output');
+    const startLine = parseInt(args[0], 10) - 1;
+    const endLine = args[1] ? parseInt(args[1], 10) - 1 : startLine;
+
+    if (!isNaN(startLine) && !isNaN(endLine)) {
+        const lines = textFile.content.split('\n');
+        for (let i = startLine; i <= endLine; i++) {
+            if (i < lines.length) {
+                outputElement.innerHTML += `Line ${i + 1}: ${lines[i]}<br>`;
+            }
+        }
+    }
 }
 
 function clearInputs() {
