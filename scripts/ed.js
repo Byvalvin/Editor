@@ -1,4 +1,5 @@
 // ed.js
+
 let textFile = {
     content: "",
     filename: "new.txt",
@@ -33,11 +34,8 @@ function showInput(command) {
             break;
 
         case 's': // Sort Lines
-            // No additional input needed for sorting
-            break;
-
         case 'w': // Save File
-            // No additional input needed for saving
+            // No additional input needed for sorting and saving
             break;
 
         case '/': // Search Forward
@@ -56,7 +54,7 @@ function showInput(command) {
 function executeCommand(cmd) {
     const outputElement = document.getElementById('output');
     let parameters = '';
-    
+
     switch (cmd) {
         case 'a': // Add text
         case 'i': // Insert text
