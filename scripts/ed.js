@@ -268,6 +268,24 @@ function clearInputs() {
 }
 
 function quit() {
-    alert("Good-bye");
+    // Reset text file content
+    textFile.content = "";
+    
+    // Clear the output area
+    document.getElementById('output').innerHTML = '';
+    
+    // Clear user inputs
+    clearInputs();
+
+    // Deselect any currently selected command
+    document.querySelectorAll('.button-container button').forEach(button => {
+        button.classList.remove('selected');
+    });
+
+    // Optionally, reset the filename if needed
+    textFile.filename = "new.txt";
+
+    alert("Everything has been reset. You can start again.");
 }
+
 
