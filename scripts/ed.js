@@ -150,7 +150,7 @@ function handleCommand(cmd, parameters) {
 
             console.log('d', startPrintLine, endPrintLine);
             startNaN = isNaN(startPrintLine);
-            lastNaN = isNaN(lastPrintLine);
+            lastNaN = isNaN(endPrintLine);
 
             if (startLineDel === null||startNaN && endLineDel === null||lastNaN) {
                 // Delete all lines
@@ -189,7 +189,7 @@ function handleCommand(cmd, parameters) {
 
             console.log('p', startPrintLine, endPrintLine);
             startNaN = isNaN(startPrintLine);
-            lastNaN = isNaN(lastPrintLine);
+            lastNaN = isNaN(endPrintLine);
 
             if (startPrintLine === null||startNaN && endPrintLine === null||lastNaN) {
                 // Print all lines
