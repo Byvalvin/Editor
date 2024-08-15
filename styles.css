@@ -44,3 +44,7 @@ body {
     padding: 10px;
     white-space: pre-wrap; /* Preserve whitespace formatting */
 }
+
+#fileInput {
+    display: none; /* Hide the file input field by default */
+}
