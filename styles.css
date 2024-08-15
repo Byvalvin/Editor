@@ -7,78 +7,82 @@ body, h1, button, input {
     box-sizing: border-box;
 }
 
-/* Body Styling */
+/* Body Styles */
 body {
     font-family: Arial, sans-serif;
-    line-height: 1.6;
-    padding: 20px;
     background-color: #f4f4f4;
-}
-
-/* Heading */
-h1 {
     color: #333;
-    text-align: center;
+    padding: 20px;
+}
+
+/* Header Styles */
+h1 {
+    font-size: 24px;
     margin-bottom: 20px;
 }
 
-/* Output Section */
-#output {
-    background: #fff;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 20px;
-    min-height: 100px;
-}
-
-/* Button Container */
+/* Button Container Styles */
 .button-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
     margin-bottom: 20px;
 }
 
-/* Buttons */
+/* Button Styles */
 .button-container button {
+    margin: 5px;
     padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
     font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .button-container button:hover {
-    background-color: #0056b3;
+    background-color: #f0f0f0;
 }
 
-/* Input Section */
+/* Selected Button Styles */
+.button-container button.selected {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+/* Input Section Styles */
 .input-section {
-    text-align: center;
+    margin-top: 20px;
 }
 
 .input-section input {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
     margin: 5px 0;
+    padding: 10px;
     font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 .input-section button {
+    margin: 10px 0;
     padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #28a745;
-    color: white;
-    cursor: pointer;
     font-size: 16px;
-    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .input-section button:hover {
-    background-color: #218838;
+    background-color: #0056b3;
+}
+
+/* Output Section Styles */
+#output {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
 }
