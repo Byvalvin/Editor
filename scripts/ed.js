@@ -1,3 +1,5 @@
+// ed.js 
+
 let textFile = {
     content: "",
     filename: "new.txt",
