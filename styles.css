@@ -1,48 +1,84 @@
 /* styles.css */
+
+/* Basic Reset */
+body, h1, button, input {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
 body {
     font-family: Arial, sans-serif;
+    line-height: 1.6;
     padding: 20px;
-    margin: 0;
+    background-color: #f4f4f4;
 }
 
+/* Heading */
 h1 {
-    margin-top: 0;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
+/* Output Section */
 #output {
+    background: #fff;
     border: 1px solid #ddd;
     padding: 10px;
-    height: 200px;
-    overflow-y: scroll;
     margin-bottom: 20px;
+    min-height: 100px;
 }
 
+/* Button Container */
 .button-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
     margin-bottom: 20px;
 }
 
-button {
-    margin: 5px;
+/* Buttons */
+.button-container button {
     padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
     font-size: 16px;
 }
 
+.button-container button:hover {
+    background-color: #0056b3;
+}
+
+/* Input Section */
 .input-section {
-    margin-bottom: 20px;
+    text-align: center;
 }
 
-.input-section input[type="text"],
-.input-section input[type="file"],
-.input-section select {
-    margin: 5px;
+.input-section input {
     padding: 10px;
-    width: calc(100% - 22px);
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 5px 0;
+    font-size: 16px;
 }
 
-.input-section input[type="file"] {
-    width: auto;
+.input-section button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
 }
 
-.input-section select {
-    width: auto;
+.input-section button:hover {
+    background-color: #218838;
 }
