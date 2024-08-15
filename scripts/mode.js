@@ -1,5 +1,3 @@
-// mode.js
-
 document.addEventListener('DOMContentLoaded', () => {
     initializeTheme();
     setAutoThemeSwitch();
