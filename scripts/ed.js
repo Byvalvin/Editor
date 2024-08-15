@@ -1,211 +1,198 @@
-// JavaScript Text Editor Application
+// ed.js
+let textFile = {
+    content: "",
+    filename: "new.txt",
+};
 
-let currentLine = 0;
-let fileSaved = false;
-let textLines = [];
-const textArea = document.getElementById('textArea');
-const commandInput = document.getElementById('commandInput');
-const fileInput = document.getElementById('fileInput');
-const additionalInputs = document.getElementById('additionalInputs');
-
-// Function to process user commands
-function processCommand() {
-    const command = commandInput.value.trim();
-    commandInput.value = ''; // Clear input field
-    additionalInputs.innerHTML = ''; // Clear additional inputs
-
-    if (!command) return; // Ignore empty commands
-
-    const [cmd] = command.split(/\s+/);
-
-    try {
-        switch (cmd) {
-            case 'p':
-                printLines();
-                break;
-            case 'a':
-                addLine();
-                break;
-            case 'd':
-                deleteLine();
-                break;
-            case 'i':
-                insertLine();
-                break;
-            case 'r':
-                replaceText();
-                break;
-            case 'l':
-                loadFile();
-                break;
-            case 's':
-                sortLines();
-                break;
-            case 'w':
-                saveFile();
-                break;
-            case 'q':
-                quit();
-                break;
-            default:
-                throw new Error(`Unknown command: ${cmd}`);
-        }
-    } catch (error) {
-        alert(`Error: ${error.message}`);
-    }
-}
-
-// Function to set the command in the input field and create additional inputs if needed
-function setCommand(command) {
-    commandInput.value = command;
-    commandInput.focus();
-    createAdditionalInputs(command);
-}
-
-// Function to create additional input fields based on the command
-function createAdditionalInputs(command) {
-    additionalInputs.innerHTML = ''; // Clear existing inputs
-
-    // Hide the file input field initially
-    fileInput.style.display = 'none';
+// Show input fields based on command
+function showInput(command) {
+    const inputSection = document.getElementById('input-section');
+    inputSection.innerHTML = ''; // Clear previous inputs
 
     switch (command) {
-        case 'p':
-            createInputField('offset', 'Number of lines to print (or leave empty for current line)');
+        case 'a': // Add Text
+        case 'i': // Insert Text
+            inputSection.innerHTML += '<input type="text" id="text-input" placeholder="Enter text here">';
             break;
-        case 'a':
-            createInputField('text', 'Text to add');
+
+        case 'd': // Delete Line
+            inputSection.innerHTML += '<input type="text" id="line-number" placeholder="Enter line number to delete">';
             break;
-        case 'd':
-            createInputField('offset', 'Line number to delete');
+
+        case 'l': // Load File
+            inputSection.innerHTML += '<input type="file" id="file-input" accept=".txt">';
             break;
-        case 'i':
-            createInputField('text', 'Text to insert');
+
+        case 'p': // Print Line
+            inputSection.innerHTML += '<input type="text" id="print-line-number" placeholder="Enter line number to print">';
             break;
-        case 'r':
-            createInputField('find', 'Text to find');
-            createInputField('replace', 'Text to replace with');
+
+        case 'r': // Replace Text
+            inputSection.innerHTML += '<input type="text" id="old-text" placeholder="Text to replace">';
+            inputSection.innerHTML += '<input type="text" id="new-text" placeholder="New text">';
             break;
-        case 'w':
-            createInputField('filename', 'Filename to save');
+
+        case 's': // Sort Lines
+            // No additional input needed for sorting
             break;
-        case 'l':
-            showFileInput(); // Show file input when loading a file
+
+        case 'w': // Save File
+            // No additional input needed for saving
+            break;
+
+        case '/': // Search Forward
+        case '?': // Search Backward
+            inputSection.innerHTML += '<input type="text" id="search-text" placeholder="Enter text to search">';
+            break;
+
+        default:
             break;
     }
+
+    // Add a submit button to handle the command
+    inputSection.innerHTML += '<button onclick="executeCommand(\'' + command + '\')">Submit</button>';
 }
 
-// Function to create an individual input field
-function createInputField(id, placeholder) {
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.id = id;
-    input.placeholder = placeholder;
-    additionalInputs.appendChild(input);
-}
+function executeCommand(cmd) {
+    const outputElement = document.getElementById('output');
+    let parameters = '';
+    
+    switch (cmd) {
+        case 'a': // Add text
+        case 'i': // Insert text
+            parameters = document.getElementById('text-input')?.value;
+            break;
 
-// Function to show the file input field
-function showFileInput() {
-    fileInput.style.display = 'block';
-}
+        case 'd': // Delete line
+            parameters = document.getElementById('line-number')?.value;
+            break;
 
-// Function to handle file input
-function loadFile() {
-    const file = fileInput.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            const fileContent = event.target.result;
-            textLines = fileContent.split('\n');
-            updateTextArea();
-            fileSaved = true; // Mark file as saved after loading
-        };
-        reader.readAsText(file);
-    } else {
-        alert('No file selected.');
+        case 'l': // Load file
+            const fileInput = document.getElementById('file-input');
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    textFile.content = e.target.result;
+                    outputElement.innerHTML += `File loaded: ${file.name}<br>`;
+                };
+                reader.readAsText(file);
+            }
+            return;
+
+        case 'p': // Print lines
+            parameters = document.getElementById('print-line-number')?.value;
+            break;
+
+        case 'r': // Replace text
+            const oldText = document.getElementById('old-text')?.value;
+            const newText = document.getElementById('new-text')?.value;
+            parameters = `${oldText} ${newText}`;
+            break;
+
+        case '/': // Search forward
+        case '?': // Search backward
+            parameters = document.getElementById('search-text')?.value;
+            break;
+
+        default:
+            break;
     }
+
+    handleCommand(cmd, parameters);
 }
 
-// Function to print lines based on the offset
-function printLines() {
-    const offset = document.getElementById('offset')?.value.trim();
-    if (offset) {
-        const numLines = parseInt(offset, 10);
-        if (isNaN(numLines) || numLines <= 0) throw new Error('Invalid offset.');
-        const linesToShow = textLines.slice(currentLine, currentLine + numLines);
-        textArea.textContent = linesToShow.join('\n');
-    } else {
-        textArea.textContent = textLines[currentLine] || '';
+function handleCommand(cmd, parameters) {
+    const outputElement = document.getElementById('output');
+    const args = parameters ? parameters.split(/\s+/) : [];
+
+    switch (cmd) {
+        case 'a': // Add text
+            textFile.content += args.join(' ') + '\n';
+            break;
+
+        case 'd': // Delete line
+            const deleteIndex = parseInt(args[0], 10);
+            if (!isNaN(deleteIndex)) {
+                textFile.content = textFile.content.split('\n').filter((_, i) => i !== deleteIndex).join('\n');
+            }
+            break;
+
+        case 'i': // Insert text
+            const insertIndex = parseInt(args[0], 10);
+            if (!isNaN(insertIndex)) {
+                const lines = textFile.content.split('\n');
+                lines.splice(insertIndex, 0, args.slice(1).join(' '));
+                textFile.content = lines.join('\n');
+            }
+            break;
+
+        case 'p': // Print lines
+            const printIndex = parseInt(args[0], 10);
+            if (!isNaN(printIndex)) {
+                const lines = textFile.content.split('\n');
+                if (printIndex < lines.length) {
+                    outputElement.innerHTML += `Line ${printIndex}: ${lines[printIndex]}<br>`;
+                }
+            }
+            break;
+
+        case 'r': // Replace text
+            const [oldText, newText] = args;
+            textFile.content = textFile.content.replace(new RegExp(oldText, 'g'), newText);
+            break;
+
+        case 's': // Sort lines
+            textFile.content = textFile.content.split('\n').sort().join('\n');
+            break;
+
+        case 'w': // Save file
+            const filename = prompt("Enter filename:", textFile.filename);
+            if (filename) {
+                const blob = new Blob([textFile.content], { type: 'text/plain' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = filename;
+                link.click();
+                textFile.filename = filename;
+            }
+            break;
+
+        case '/': // Search forward
+        case '?': // Search backward
+            const searchText = args[0];
+            const lines = textFile.content.split('\n');
+            let found = false;
+            if (cmd === '/') { // Search forward
+                for (const line of lines) {
+                    if (line.includes(searchText)) {
+                        outputElement.innerHTML += `Found: ${line}<br>`;
+                        found = true;
+                        break;
+                    }
+                }
+            } else if (cmd === '?') { // Search backward
+                for (let i = lines.length - 1; i >= 0; i--) {
+                    if (lines[i].includes(searchText)) {
+                        outputElement.innerHTML += `Found: ${lines[i]}<br>`;
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            if (!found) {
+                outputElement.innerHTML += `Text not found<br>`;
+            }
+            break;
+
+        default:
+            outputElement.innerHTML += `Invalid command: ${cmd}<br>`;
+            break;
     }
+
+    outputElement.innerHTML += `Content:<br>${textFile.content.replace(/\n/g, '<br>')}<br>`;
 }
 
-// Function to add a new line
-function addLine() {
-    const text = document.getElementById('text')?.value.trim();
-    if (!text) throw new Error('No text provided.');
-    textLines.splice(currentLine + 1, 0, text);
-    updateTextArea();
-}
-
-// Function to delete a line
-function deleteLine() {
-    const offset = document.getElementById('offset')?.value.trim();
-    const lineOffset = parseInt(offset, 10);
-    if (isNaN(lineOffset) || lineOffset < 1 || currentLine + lineOffset - 1 >= textLines.length) throw new Error('Invalid line number.');
-    textLines.splice(currentLine + lineOffset - 1, 1);
-    updateTextArea();
-}
-
-// Function to insert a new line
-function insertLine() {
-    const text = document.getElementById('text')?.value.trim();
-    if (!text) throw new Error('No text provided.');
-    textLines.splice(currentLine, 0, text);
-    updateTextArea();
-}
-
-// Function to replace text in lines
-function replaceText() {
-    const find = document.getElementById('find')?.value.trim();
-    const replace = document.getElementById('replace')?.value.trim();
-    if (!find || !replace) throw new Error('Find and replace texts are required.');
-    textLines = textLines.map(line => line.replace(new RegExp(find, 'g'), replace));
-    updateTextArea();
-}
-
-// Function to sort lines
-function sortLines() {
-    textLines.sort();
-    updateTextArea();
-}
-
-// Function to save the file
-function saveFile() {
-    const filename = document.getElementById('filename')?.value.trim();
-    if (!filename) throw new Error('Filename is required.');
-    const blob = new Blob([textLines.join('\n')], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    a.click();
-    URL.revokeObjectURL(url);
-    fileSaved = true;
-}
-
-// Function to quit the application
 function quit() {
-    if (!fileSaved) {
-        const confirmSave = confirm("Current text not saved. File will be discarded. Do you wish to continue?");
-        if (!confirmSave) return;
-    }
-    alert('Quitting application.');
+    alert("Good-bye");
 }
-
-// Function to update the text area
-function updateTextArea() {
-    textArea.textContent = textLines.join('\n');
-}
-
-// Event listener for file input change
-fileInput.addEventListener('change', loadFile);
