@@ -136,6 +136,9 @@ function handleCommand(cmd, parameters) {
     const outputElement = document.getElementById('output');
     const args = parameters ? parameters.split(/\s+/) : [];
 
+    let startNaN = false;
+    let lastNaN = false;
+    
     switch (cmd) {
         case 'a': // Add text
             textFile.content += args.join(' ') + '\n';
@@ -146,8 +149,8 @@ function handleCommand(cmd, parameters) {
             const endLineDel = args.length > 1 ? parseInt(args[1], 10) - 1 : null;
 
             console.log('d', startPrintLine, endPrintLine);
-            const startNaN = isNaN(startPrintLine);
-            const lastNaN = isNaN(lastPrintLine);
+            startNaN = isNaN(startPrintLine);
+            lastNaN = isNaN(lastPrintLine);
 
             if (startLineDel === null||startNaN && endLineDel === null||lastNaN) {
                 // Delete all lines
@@ -185,8 +188,8 @@ function handleCommand(cmd, parameters) {
             const endPrintLine = args.length > 1 ? parseInt(args[1], 10) - 1 : null;
 
             console.log('p', startPrintLine, endPrintLine);
-            const startNaN = isNaN(startPrintLine);
-            const lastNaN = isNaN(lastPrintLine);
+            startNaN = isNaN(startPrintLine);
+            lastNaN = isNaN(lastPrintLine);
 
             if (startPrintLine === null||startNaN && endPrintLine === null||lastNaN) {
                 // Print all lines
