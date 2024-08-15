@@ -13,6 +13,19 @@ body {
     background-color: #f4f4f4;
     color: #333;
     padding: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Light Mode Styles */
+.light-mode {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+    background-color: #333;
+    color: #f4f4f4;
 }
 
 /* Header Styles */
@@ -85,4 +98,22 @@ h1 {
     border: 1px solid #ddd;
     border-radius: 4px;
     background-color: #fff;
+}
+
+/* Theme Toggle Icon Styles */
+#theme-toggle {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    transition: color 0.3s;
+}
+
+.dark-mode #theme-toggle {
+    color: #f4f4f4;
+}
+
+.light-mode #theme-toggle {
+    color: #333;
 }
