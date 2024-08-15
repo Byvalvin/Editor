@@ -6,11 +6,13 @@ let textLines = [];
 const textArea = document.getElementById('textArea');
 const commandInput = document.getElementById('commandInput');
 const fileInput = document.getElementById('fileInput');
+const additionalInputs = document.getElementById('additionalInputs');
 
 // Function to process user commands
 function processCommand() {
     const command = commandInput.value.trim();
     commandInput.value = ''; // Clear input field
+    additionalInputs.innerHTML = ''; // Clear additional inputs
 
     if (!command) return; // Ignore empty commands
 
@@ -31,7 +33,6 @@ function processCommand() {
                 insertLine(params[0]);
                 break;
             case 'l':
-                // Load file from the file input
                 loadFile();
                 break;
             case 'r':
@@ -54,10 +55,48 @@ function processCommand() {
     }
 }
 
-// Function to set the command in the input field
+// Function to set the command in the input field and create additional inputs if needed
 function setCommand(command) {
     commandInput.value = command;
     commandInput.focus();
+    createAdditionalInputs(command);
+}
+
+// Function to create additional input fields based on the command
+function createAdditionalInputs(command) {
+    additionalInputs.innerHTML = ''; // Clear existing inputs
+
+    switch (command) {
+        case 'p':
+            createInputField('offset', 'Number of lines to print (or leave empty for current line)');
+            break;
+        case 'a':
+            createInputField('text', 'Text to add');
+            break;
+        case 'd':
+            createInputField('offset', 'Line number to delete');
+            break;
+        case 'i':
+            createInputField('text', 'Text to insert');
+            break;
+        case 'r':
+            createInputField('find', 'Text to find');
+            createInputField('replace', 'Text to replace with');
+            break;
+        case 'w':
+            createInputField('filename', 'Filename to save');
+            break;
+        // Add cases for other commands if needed
+    }
+}
+
+// Function to create an individual input field
+function createInputField(id, placeholder) {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.id = id;
+    input.placeholder = placeholder;
+    additionalInputs.appendChild(input);
 }
 
 // Function to print lines based on the offset
