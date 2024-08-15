@@ -15,7 +15,12 @@ function selectCommand(command) {
     });
 
     // Highlight the selected button
-    document.getElementById(`btn-${command}`).classList.add('selected');
+    const selectedButton = document.getElementById(`btn-${command}`);
+    if (selectedButton) {
+        selectedButton.classList.add('selected');
+    } else {
+        console.error(`Button with ID 'btn-${command}' not found.`);
+    }
 
     // Show input fields based on command
     showInput(command);
