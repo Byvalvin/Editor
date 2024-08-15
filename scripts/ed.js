@@ -24,16 +24,16 @@ function processCommand() {
                 printLines(params[0]);
                 break;
             case 'a':
-                addLine(params[0]);
+                addLine(params.join(' '));
                 break;
             case 'd':
                 deleteLine(params[0]);
                 break;
             case 'i':
-                insertLine(params[0]);
+                insertLine(params.join(' '));
                 break;
             case 'l':
-                showFileInput(); // Show file input when loading a file
+                loadFile();
                 break;
             case 'r':
                 replaceText(params[0], params[1]);
@@ -92,7 +92,6 @@ function createAdditionalInputs(command) {
         case 'l':
             showFileInput(); // Show file input when loading a file
             break;
-        // Add cases for other commands if needed
     }
 }
 
@@ -119,6 +118,7 @@ function loadFile() {
             const fileContent = event.target.result;
             textLines = fileContent.split('\n');
             updateTextArea();
+            fileSaved = true; // Mark file as saved after loading
         };
         reader.readAsText(file);
     } else {
@@ -130,6 +130,7 @@ function loadFile() {
 function printLines(offset) {
     if (offset) {
         offset = parseInt(offset, 10);
+        if (isNaN(offset) || offset <= 0) throw new Error('Invalid offset.');
         const linesToShow = textLines.slice(currentLine, currentLine + offset);
         textArea.textContent = linesToShow.join('\n');
     } else {
@@ -139,6 +140,7 @@ function printLines(offset) {
 
 // Function to add a new line
 function addLine(text) {
+    if (text === undefined || text.trim() === '') throw new Error('No text provided.');
     textLines.splice(currentLine + 1, 0, text);
     updateTextArea();
 }
@@ -146,19 +148,22 @@ function addLine(text) {
 // Function to delete a line
 function deleteLine(offset) {
     offset = parseInt(offset, 10);
-    textLines.splice(currentLine + offset, 1);
+    if (isNaN(offset) || offset < 1 || currentLine + offset >= textLines.length) throw new Error('Invalid line number.');
+    textLines.splice(currentLine + offset - 1, 1);
     updateTextArea();
 }
 
 // Function to insert a new line
 function insertLine(text) {
+    if (text === undefined || text.trim() === '') throw new Error('No text provided.');
     textLines.splice(currentLine, 0, text);
     updateTextArea();
 }
 
 // Function to replace text in lines
 function replaceText(find, replace) {
-    textLines = textLines.map(line => line.replace(find, replace));
+    if (!find || !replace) throw new Error('Find and replace texts are required.');
+    textLines = textLines.map(line => line.replace(new RegExp(find, 'g'), replace));
     updateTextArea();
 }
 
@@ -168,9 +173,16 @@ function sortLines() {
     updateTextArea();
 }
 
-// Function to save the file (not implemented)
+// Function to save the file
 function saveFile(filename) {
-    alert('Saving files is not implemented yet.');
+    if (!filename) throw new Error('Filename is required.');
+    const blob = new Blob([textLines.join('\n')], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
     fileSaved = true;
 }
 
@@ -187,3 +199,6 @@ function quit() {
 function updateTextArea() {
     textArea.textContent = textLines.join('\n');
 }
+
+// Event listener for file input change
+fileInput.addEventListener('change', loadFile);
