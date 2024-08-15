@@ -33,7 +33,7 @@ function processCommand() {
                 insertLine(params[0]);
                 break;
             case 'l':
-                loadFile();
+                showFileInput(); // Show file input when loading a file
                 break;
             case 'r':
                 replaceText(params[0], params[1]);
@@ -66,6 +66,9 @@ function setCommand(command) {
 function createAdditionalInputs(command) {
     additionalInputs.innerHTML = ''; // Clear existing inputs
 
+    // Hide the file input field initially
+    fileInput.style.display = 'none';
+
     switch (command) {
         case 'p':
             createInputField('offset', 'Number of lines to print (or leave empty for current line)');
@@ -86,6 +89,9 @@ function createAdditionalInputs(command) {
         case 'w':
             createInputField('filename', 'Filename to save');
             break;
+        case 'l':
+            showFileInput(); // Show file input when loading a file
+            break;
         // Add cases for other commands if needed
     }
 }
@@ -97,6 +103,27 @@ function createInputField(id, placeholder) {
     input.id = id;
     input.placeholder = placeholder;
     additionalInputs.appendChild(input);
+}
+
+// Function to show the file input field
+function showFileInput() {
+    fileInput.style.display = 'block';
+}
+
+// Function to handle file input
+function loadFile() {
+    const file = fileInput.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const fileContent = event.target.result;
+            textLines = fileContent.split('\n');
+            updateTextArea();
+        };
+        reader.readAsText(file);
+    } else {
+        alert('No file selected.');
+    }
 }
 
 // Function to print lines based on the offset
@@ -127,22 +154,6 @@ function deleteLine(offset) {
 function insertLine(text) {
     textLines.splice(currentLine, 0, text);
     updateTextArea();
-}
-
-// Function to handle file input
-function loadFile() {
-    const file = fileInput.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            const fileContent = event.target.result;
-            textLines = fileContent.split('\n');
-            updateTextArea();
-        };
-        reader.readAsText(file);
-    } else {
-        alert('No file selected.');
-    }
 }
 
 // Function to replace text in lines
