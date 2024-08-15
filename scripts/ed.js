@@ -34,26 +34,26 @@ function showInput(command) {
     switch (command) {
         case 'a': // Add Text
         case 'i': // Insert Text
-            inputSection.innerHTML += '<input type="text" id="text-input" placeholder="Enter text here">';
+            inputSection.innerHTML += '<input type="text" id="text-input" class="text-input" placeholder="Enter text here">';
             break;
 
         case 'd': // Delete Line
-            inputSection.innerHTML += '<input type="text" id="line-number-start" placeholder="Enter start line number (optional)">';
-            inputSection.innerHTML += '<input type="text" id="line-number-end" placeholder="Enter end line number (optional)">';
+            inputSection.innerHTML += '<input type="text" id="line-number-start" class="number-input" placeholder="Start line (optional)">';
+            inputSection.innerHTML += '<input type="text" id="line-number-end" class="number-input" placeholder="End line (optional)">';
             break;
 
         case 'l': // Load File
-            inputSection.innerHTML += '<input type="file" id="file-input" accept=".txt">';
+            inputSection.innerHTML += '<input type="file" id="file-input">';
             break;
 
         case 'p': // Print Line
-            inputSection.innerHTML += '<input type="text" id="print-line-start" placeholder="Enter start line number (optional)">';
-            inputSection.innerHTML += '<input type="text" id="print-line-end" placeholder="Enter end line number (optional)">';
+            inputSection.innerHTML += '<input type="text" id="print-line-start" class="number-input" placeholder="Start line (optional)">';
+            inputSection.innerHTML += '<input type="text" id="print-line-end" class="number-input" placeholder="End line (optional)">';
             break;
 
         case 'r': // Replace Text
-            inputSection.innerHTML += '<input type="text" id="old-text" placeholder="Text to replace">';
-            inputSection.innerHTML += '<input type="text" id="new-text" placeholder="New text">';
+            inputSection.innerHTML += '<input type="text" id="old-text" class="text-input" placeholder="Text to replace">';
+            inputSection.innerHTML += '<input type="text" id="new-text" class="text-input" placeholder="New text">';
             break;
 
         case 's': // Sort Lines
@@ -66,7 +66,7 @@ function showInput(command) {
 
         case '/': // Search Forward
         case '?': // Search Backward
-            inputSection.innerHTML += '<input type="text" id="search-text" placeholder="Enter text to search">';
+            inputSection.innerHTML += '<input type="text" id="search-text" class="text-input" placeholder="Enter text to search">';
             break;
 
         default:
@@ -76,6 +76,7 @@ function showInput(command) {
     // Add a submit button to handle the command
     inputSection.innerHTML += '<button onclick="executeCommand(\'' + command + '\')">Submit</button>';
 }
+
 
 function executeCommand(cmd) {
     const outputElement = document.getElementById('output');
