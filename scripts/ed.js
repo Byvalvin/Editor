@@ -1,11 +1,25 @@
-// ed.js
-
 let textFile = {
     content: "",
     filename: "new.txt",
 };
 
-// Show input fields based on command
+// Store the last selected command
+let selectedCommand = '';
+
+function selectCommand(command) {
+    // Remove highlight from all buttons
+    document.querySelectorAll('.button-container button').forEach(button => {
+        button.classList.remove('selected');
+    });
+
+    // Highlight the selected button
+    document.getElementById(`btn-${command}`).classList.add('selected');
+
+    // Show input fields based on command
+    showInput(command);
+    selectedCommand = command; // Update the selected command
+}
+
 function showInput(command) {
     const inputSection = document.getElementById('input-section');
     inputSection.innerHTML = ''; // Clear previous inputs
@@ -34,8 +48,11 @@ function showInput(command) {
             break;
 
         case 's': // Sort Lines
+            // No additional input needed for sorting
+            break;
+
         case 'w': // Save File
-            // No additional input needed for sorting and saving
+            // No additional input needed for saving
             break;
 
         case '/': // Search Forward
@@ -54,7 +71,7 @@ function showInput(command) {
 function executeCommand(cmd) {
     const outputElement = document.getElementById('output');
     let parameters = '';
-
+    
     switch (cmd) {
         case 'a': // Add text
         case 'i': // Insert text
