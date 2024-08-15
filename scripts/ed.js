@@ -1,4 +1,5 @@
 // JavaScript Text Editor Application
+console.log("loaded ed");
 
 let currentLine = 0;
 let fileSaved = false;
