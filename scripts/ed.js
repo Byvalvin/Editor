@@ -38,17 +38,17 @@ function showInput(command) {
             break;
 
         case 'd': // Delete Line
-            inputSection.innerHTML += '<input type="text" id="start-line-number" placeholder="Enter start line number">';
-            inputSection.innerHTML += '<input type="text" id="end-line-number" placeholder="Enter end line number">';
+            inputSection.innerHTML += '<input type="text" id="line-number-start" placeholder="Enter line number to start (optional)">';
+            inputSection.innerHTML += '<input type="text" id="line-number-end" placeholder="Enter line number to end (optional)">';
             break;
 
         case 'l': // Load File
             inputSection.innerHTML += '<input type="file" id="file-input" accept=".txt">';
             break;
 
-        case 'p': // Print Line/Range
-            inputSection.innerHTML += '<input type="text" id="print-start-line-number" placeholder="Enter start line number">';
-            inputSection.innerHTML += '<input type="text" id="print-end-line-number" placeholder="Enter end line number (optional)">';
+        case 'p': // Print Line
+            inputSection.innerHTML += '<input type="text" id="print-line-start" placeholder="Enter line number to start (optional)">';
+            inputSection.innerHTML += '<input type="text" id="print-line-end" placeholder="Enter line number to end (optional)">';
             break;
 
         case 'r': // Replace Text
@@ -76,6 +76,7 @@ function showInput(command) {
     // Add a submit button to handle the command
     inputSection.innerHTML += '<button onclick="executeCommand(\'' + command + '\')">Submit</button>';
 }
+
 
 function executeCommand(cmd) {
     const outputElement = document.getElementById('output');
@@ -141,10 +142,18 @@ function handleCommand(cmd, parameters) {
             break;
 
         case 'd': // Delete lines
-            const startLineDel = parseInt(args[0], 10) - 1;
-            const endLineDel = parseInt(args[1], 10) - 1;
-            if (!isNaN(startLineDel) && !isNaN(endLineDel)) {
-                textFile.content = textFile.content.split('\n').filter((_, i) => i < startLineDel || i > endLineDel).join('\n');
+            const startLine = args.length > 0 ? parseInt(args[0], 10) - 1 : null;
+            const endLine = args.length > 1 ? parseInt(args[1], 10) - 1 : null;
+
+            if (startLine === null && endLine === null) {
+                // Delete all lines
+                textFile.content = '';
+            } else if (startLine !== null && endLine === null) {
+                // Delete specific line
+                textFile.content = textFile.content.split('\n').filter((_, i) => i !== startLine).join('\n');
+            } else if (startLine !== null && endLine !== null) {
+                // Delete range of lines
+                textFile.content = textFile.content.split('\n').filter((_, i) => i < startLine || i > endLine).join('\n');
             }
             break;
 
@@ -157,8 +166,28 @@ function handleCommand(cmd, parameters) {
             }
             break;
 
-        case 'p': // Print line or range
-            printLines(args);
+        case 'p': // Print lines
+            const startPrintLine = args.length > 0 ? parseInt(args[0], 10) - 1 : null;
+            const endPrintLine = args.length > 1 ? parseInt(args[1], 10) - 1 : null;
+
+            if (startPrintLine === null && endPrintLine === null) {
+                // Print all lines
+                textFile.content.split('\n').forEach((line, index) => {
+                    outputElement.innerHTML += `Line ${index + 1}: ${line}<br>`;
+                });
+            } else if (startPrintLine !== null && endPrintLine === null) {
+                // Print specific line
+                const lines = textFile.content.split('\n');
+                if (startPrintLine < lines.length) {
+                    outputElement.innerHTML += `Line ${startPrintLine + 1}: ${lines[startPrintLine]}<br>`;
+                }
+            } else if (startPrintLine !== null && endPrintLine !== null) {
+                // Print range of lines
+                const lines = textFile.content.split('\n');
+                for (let i = startPrintLine; i <= endPrintLine && i < lines.length; i++) {
+                    outputElement.innerHTML += `Line ${i + 1}: ${lines[i]}<br>`;
+                }
+            }
             break;
 
         case 'r': // Replace text
@@ -216,6 +245,7 @@ function handleCommand(cmd, parameters) {
 
     outputElement.innerHTML += `Content:<br>${textFile.content.replace(/\n/g, '<br>')}<br>`;
 }
+
 
 function printLines(args) {
     const outputElement = document.getElementById('output');
