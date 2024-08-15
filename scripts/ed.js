@@ -51,6 +51,11 @@ function processCommand() {
     }
 }
 
+function setCommand(command) {
+    commandInput.value = command;
+    commandInput.focus();
+}
+
 function printLines(offset) {
     if (offset) {
         offset = parseInt(offset, 10);
