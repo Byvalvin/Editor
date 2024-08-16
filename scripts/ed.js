@@ -152,17 +152,17 @@ function handleCommand(cmd, parameters) {
             startNaN = isNaN(startPrintLine);
             lastNaN = isNaN(endPrintLine);
 
-            if (startLineDel === null||startNaN && endLineDel === null||lastNaN) {
+            if (startLineDel === null || startNaN && endLineDel === null || lastNaN) {
                 // Delete all lines
                 textFile.content = '';
-            } else if (startLineDel !== null||startNaN && endLineDel === null||lastNaN) {
+            } else if (startLineDel !== null || !startNaN && endLineDel === null || lastNaN) {
                 // Delete specific line
                 if (startLineDel >= 0 && startLineDel < textFile.content.split('\n').length) {
                     textFile.content = textFile.content.split('\n').filter((_, i) => i !== startLineDel).join('\n');
                 } else {
                     alert("Line number out of bounds");
                 }
-            } else if (startLineDel !== null||startNaN && endLineDel !== null||lastNaN) {
+            } else if (startLineDel !== null || !startNaN && endLineDel !== null || !lastNaN) {
                 // Delete range of lines
                 if (startLineDel >= 0 && endLineDel >= startLineDel && endLineDel < textFile.content.split('\n').length) {
                     textFile.content = textFile.content.split('\n').filter((_, i) => i < startLineDel || i > endLineDel).join('\n');
