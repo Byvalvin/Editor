@@ -191,12 +191,12 @@ function handleCommand(cmd, parameters) {
             startNaN = isNaN(startPrintLine);
             lastNaN = isNaN(endPrintLine);
 
-            if (startPrintLine === null||startNaN && endPrintLine === null||lastNaN) {
+            if (startPrintLine === null || startNaN && endPrintLine === null || lastNaN) {
                 // Print all lines
                 textFile.content.split('\n').forEach((line, index) => {
                     outputElement.innerHTML += `Line ${index + 1}: ${line}<br>`;
                 });
-            } else if (startPrintLine !== null||startNaN && endPrintLine === null||lastNaN) {
+            } else if (startPrintLine !== null || !startNaN && endPrintLine === null || lastNaN) {
                 // Print specific line
                 if (startPrintLine >= 0 && startPrintLine < textFile.content.split('\n').length) {
                     const lines = textFile.content.split('\n');
@@ -204,7 +204,7 @@ function handleCommand(cmd, parameters) {
                 } else {
                     alert("Line number out of bounds");
                 }
-            } else if (startPrintLine !== null||startNaN && endPrintLine !== null||lastNaN) {
+            } else if (startPrintLine !== null || !startNaN && endPrintLine !== null || !lastNaN) {
                 // Print range of lines
                 if (  (startPrintLine >= 0 && endPrintLine >= startPrintLine) && endPrintLine < textFile.content.split('\n').length) {
                     const lines = textFile.content.split('\n');
