@@ -148,9 +148,9 @@ function handleCommand(cmd, parameters) {
             const startLineDel = args.length > 0 ? parseInt(args[0], 10) - 1 : null;
             const endLineDel = args.length > 1 ? parseInt(args[1], 10) - 1 : null;
 
-            console.log('d', startPrintLine, endPrintLine);
-            startNaN = isNaN(startPrintLine);
-            lastNaN = isNaN(endPrintLine);
+            console.log('d', startLineDel, endLineDel);
+            startNaN = isNaN(startLineDel);
+            lastNaN = isNaN(endLineDel);
 
             if (startLineDel === null || startNaN && endLineDel === null || lastNaN) {
                 // Delete all lines
